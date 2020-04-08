@@ -17,7 +17,6 @@ function Point(x, y, color) {
             edgeY = radius * Math.sin(ratio) + this.y;
             //drawPoint(cxt, edgeX, edgeY, [0, 0, 0]);
             drawLine(cxt, this, new Point(edgeX, edgeY), [255, 0, 0]);
-            drawLine(cxt, this, new Point(edgeX, edgeY), [255, 0, 0]);
         }
     }
 }
