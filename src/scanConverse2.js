@@ -53,7 +53,7 @@ function equals(num1, num2) {
     return Math.abs(num1 - num2) < delta;
 }
 
-// 扫描转化算法
+// 扫描转换算法
 function scanPolygon(polygon, color) {
     var activeEdgeList = new LinkedList();
     var edges = polygon.edgeList;
@@ -89,8 +89,7 @@ function scanPolygon(polygon, color) {
             if(!isIntersected(i, curEdge)) {
                 activeEdgeList.remove(curNode);
             } else {
-                //if(equals(curEdge.beginPoint.y, curEdge.endPoint.y)) {
-                    if(curEdge.beginPoint.y === curEdge.endPoint.y) {
+                if(curEdge.beginPoint.y === curEdge.endPoint.y) {
                     drawLine(cxt, curEdge.beginPoint, curEdge.endPoint, color);
                     // 设定平行线与扫描线有两个交点，分别为初始点和结尾点
                     curNode.intersection = curEdge.beginPoint;
@@ -196,19 +195,19 @@ function mouseMove(event) {
         flag = 0;
     }
 
-    // 当鼠标移动时，根据鼠标实时的坐标，重新进行扫描转化
+    // 当鼠标移动时，根据鼠标实时的坐标，重新进行扫描转换
     if(flag === 1 && dragPoint !== undefined) {
         points[dragPoint].x = newX;
         points[dragPoint].y = newY;
         // 刷新canvas
         c.height = canvasSize.maxY;
-        // 首先对不以拖拽点为顶点的多边形做扫描转化
+        // 首先对不以拖拽点为顶点的多边形做扫描转换
         for(var i = polygonList.length - 1; i >= 0; i--) {
             if(!polygonList[i].containsPoint(dragPoint)) {
                 scanPolygon(polygonList[i], points[polygonList[i].pointList[0]].color);
             }
         }
-        // 然后对以拖拽点为顶点的多边形做扫描转化
+        // 然后对以拖拽点为顶点的多边形做扫描转换
         for(var i = 0; i < polygonList.length; i++) {
             if(polygonList[i].containsPoint(dragPoint)) {
                 scanPolygon(polygonList[i], points[polygonList[i].pointList[0]].color);
@@ -255,17 +254,13 @@ for(var i = 0; i < polygon.length; i++) {
     // 每个四边形的所有边的集合
     var edges = [];
     for(var j = 0; j < polygon[i].length; j++) {
-        var end = j + 1;
-        if(j + 1 === polygon[i].length) {
-            end = 0;
-        }
-        // var curEdge = new Edge(points[polygon[i][j]], points[polygon[i][end]]);
+        var end = (j + 1 === polygon[i].length) ? 0 : j + 1;
         edges.push(new Edge(points[polygon[i][j]], points[polygon[i][end]]));
     }
     polygonList.push(new Polygon(edges, polygon[i]));
 }
 
-// 初始时为canvas中的多边形填充颜色：第一次扫描转化
+// 初始时为canvas中的多边形填充颜色：第一次扫描转换
 for(var i = 0; i < polygonList.length; i++) {
     scanPolygon(polygonList[i], points[polygonList[i].pointList[0]].color);
 }
